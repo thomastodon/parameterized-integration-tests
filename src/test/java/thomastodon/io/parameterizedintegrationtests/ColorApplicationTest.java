@@ -1,5 +1,6 @@
 package thomastodon.io.parameterizedintegrationtests;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,9 +16,10 @@ class ColorApplicationTest {
 
     @Autowired ColorService colorService;
 
-    @ParameterizedTest
-    @CsvSource({"red, yellow", "blue, green"})
-    void contextLoads(String colorOne, String colorTwo) {
-        assertThat(colorService.add(colorOne, colorTwo)).isEqualTo("purple");
+    @DisplayName("adding colors")
+    @CsvSource({"red, yellow, orange", "blue, red, purple"})
+    @ParameterizedTest(name = "adding {0} and {1} returns {2}")
+    void test(String colorOne, String colorTwo, String colorThree) {
+        assertThat(colorService.add(colorOne, colorTwo)).isEqualTo(colorThree);
     }
 }
